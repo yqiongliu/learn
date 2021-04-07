@@ -105,27 +105,21 @@ int getMid(vector<int>& arr, int start, int end/*不包含 */){
     swap(arr[start], arr[curIndex]);
 
     int i = start;
-    int j = end;
-    int temp = arr[start];
-    while(i < j){
-        while(i < j){
-                if (temp > arr[j]){
-                    swap(arr[i], arr[j]);
-                    i++;
-                    break;
-                }else{
-                    j--;
-                }
+    int j = end-1;
+    while(i <= j){
+        while(i <= j && arr[i] <= arr[j]){
+            j--;
         }
-        while(i < j){
-         if (temp > arr[j]){
-                            swap(arr[i], arr[j]);
-                            i++;
-                            break;
-                        }else{
-                            j--;
-                        }
-
+        if (i <= j){
+            swap(arr[i], arr[j]);
+            i++;
+        }
+        while(i <= j && arr[i] <= arr[j]){
+            i++;
+        }
+        if (i <= j){
+            wap(arr[i], arr[j]);
+            j--;
         }
     }
     return i;
