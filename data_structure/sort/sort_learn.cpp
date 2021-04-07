@@ -15,8 +15,31 @@ std::vector<int> getRandonArr(int num, int start, int end);
 // 可以自定义排序函数。注意参数是值传递 不是引用。
 bool myArrBiger(int i, int j);
 
+// 冒泡排序
+void myPopSort(vector<int> & arr);
 
+// 快速排序
+void myQuickSort(vector<int> & arr);
 
+// 选择排序
+void mySelectSort(vector<int> & arr);
+
+// 插入排序
+void myInsertkSort(vector<int> & arr);
+
+// 归并排序
+void myMergeSort(vector<int> & arr);
+
+class Node{
+
+};
+// 链表归并排序
+void myMergeSort(Node* ptr);
+
+// 堆排序
+void myHeapSort(vector<int> & arr);
+
+// 希尔排序
 
 
 int main(){
@@ -58,3 +81,83 @@ std::vector<int> getRandonArr(int num, int start, int end){
 bool myArrBiger(int i, int j){
     return i > j;
 }
+
+// 冒泡排序
+void myPopSort(vector<int> & arr){
+    int n = arr.size();
+    bool isSwap = true;
+    for(int i = 0; i < n; i++){
+        if (!isSwap){
+            break;
+        }
+        isSwap = false;
+        for(int j = 0; j < n-i-1; j++){
+            if (arr[j] > arr[j+1]){
+                swap(arr[j], arr[j+1]);
+                isSwap = true;
+            }
+        }
+    }
+}
+
+int getMid(vector<int>& arr, int start, int end/*不包含 */){
+    int curIndex = rand() % (end - start) + start;
+    swap(arr[start], arr[curIndex]);
+
+    int i = start;
+    int j = end;
+    int temp = arr[start];
+    while(i < j){
+        while(i < j){
+                if (temp > arr[j]){
+                    swap(arr[i], arr[j]);
+                    i++;
+                    break;
+                }else{
+                    j--;
+                }
+        }
+        while(i < j){
+         if (temp > arr[j]){
+                            swap(arr[i], arr[j]);
+                            i++;
+                            break;
+                        }else{
+                            j--;
+                        }
+
+        }
+    }
+    return i;
+}
+
+
+void myQuickSortSub(vector<int>& arr, int start, int end/*不包含 */){
+    if (start < 0 || end > arr.size() || start >= end-1) return;
+    int mid = getMid(arr, start, end);
+    myQuickSortSub(arr, start, mid);
+    myQuickSortSub(arr, mid, end);
+}
+// 快速排序
+void myQuickSort(vector<int> & arr){
+    int mid = select(arr);
+
+
+}
+
+// 选择排序
+void mySelectSort(vector<int> & arr);
+
+// 插入排序
+void myInsertkSort(vector<int> & arr);
+
+// 归并排序
+void myMergeSort(vector<int> & arr);
+
+
+// 链表归并排序
+void myMergeSort(Node* ptr);
+
+// 堆排序
+void myHeapSort(vector<int> & arr);
+
