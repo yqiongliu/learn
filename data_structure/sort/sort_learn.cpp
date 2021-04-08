@@ -105,27 +105,22 @@ int getMid(vector<int>& arr, int start, int end/*不包含 */){
     swap(arr[start], arr[curIndex]);
 
     int i = start;
-    int j = end;
+    int j = end-1;
     int temp = arr[start];
     while(i < j){
-        while(i < j){
-                if (temp > arr[j]){
-                    swap(arr[i], arr[j]);
-                    i++;
-                    break;
-                }else{
-                    j--;
-                }
+        while(i < j && arr[i] <= arr[j]){
+            j--;
         }
-        while(i < j){
-         if (temp > arr[j]){
-                            swap(arr[i], arr[j]);
-                            i++;
-                            break;
-                        }else{
-                            j--;
-                        }
-
+        if (i < j){
+            swap(arr[i], arr[j]);
+            i++;
+        }        
+        while(i < j && arr[i] <= arr[j]){
+            i++;
+        }
+        if (i < j){
+            swap(arr[i], arr[j]);
+            j--;
         }
     }
     return i;
@@ -140,19 +135,71 @@ void myQuickSortSub(vector<int>& arr, int start, int end/*不包含 */){
 }
 // 快速排序
 void myQuickSort(vector<int> & arr){
-    int mid = select(arr);
-
-
+    myQuickSortSub(arr, 0, arr.size());
 }
 
 // 选择排序
-void mySelectSort(vector<int> & arr);
+void mySelectSort(vector<int> & arr){
+    int n = arr.size();
+    for(int i = 0; i < n; i++){
+        int min = arr[i];
+        int minIndex = i;
+        for(int j = i+1; j < n; j++){
+            if (arr[j] < min){
+                minIndex = j;
+            }
+        }
+        if (minIndex != i) swap(arr[i], arr[minIndex]);
+    }
+}
 
 // 插入排序
-void myInsertkSort(vector<int> & arr);
+void myInsertkSort(vector<int> & arr){
+    int n = arr.size();
+    for(int i = 1; i < n; i++){
+        for(int j = i-1; j >= 0; j--){
+            if (arr[j+1] < arr[j]){
+                swap[arr[j+1], arr[j]];
+            }else{
+                break;
+            }
+        }
+    }
+}
 
+void myMergeSortSub(vector<int> & arr, int start, int end){
+    if (start < 0 || end > arr.size() || start >= end - 1) return;
+    int n = end - start;
+    int mid = n/2 + start;
+    myMergeSortSub(arr, start, mid);
+    myMergeSortSub(arr, mid, end);
+
+    // merge
+    std::vector<int> buff(arr.begin(), arr.end());
+
+    int i = start;
+    int j = mid;
+    int buffI = start;
+    // i
+    while(i < mid || j < end){
+        while(i < mid && (j >= end || arr[i] <= arr[j])){
+            buff[buffI] = arr[i];
+            buffI++;
+            i++;
+        }
+        // j
+        while(j < end && (i >= mid || arr[j] < arr[i])){ //todo <= ?
+            buff[buffI] = arr[j];
+            buffI++;
+            j++;
+        }
+    }
+}
 // 归并排序
-void myMergeSort(vector<int> & arr);
+void myMergeSort(vector<int> & arr){
+     myMergeSortSub(arr, 0, arr.size());
+
+}
 
 
 // 链表归并排序
